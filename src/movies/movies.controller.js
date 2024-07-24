@@ -24,7 +24,9 @@ async function read(request, response) {
 
 async function list(request, response) {
   // TODO: Add your code here.
-  const data = await service.list();
+  const { is_showing } = request.query;
+  // console.log("isShowing:", is_showing);
+  const data = await service.list(is_showing);
   response.json({ data });
 }
 
