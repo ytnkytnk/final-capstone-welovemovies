@@ -3,7 +3,7 @@ const asyncErrorBoundary = require("../errors/asyncErrorBoundary");
 
 async function movieExists(request, response, next) {
   // TODO: Add your code here.
-  const movie = await service.read(request.params.movie_id);
+  const movie = await service.read(request.params.movieId);
 
   if (movie) {
     response.locals.movie = movie;
@@ -27,18 +27,8 @@ async function list(request, response) {
   response.json({ data });
 }
 
-// async function listTheatersForMovie(request, response) {
-//   const data = await service.listTheatersForMovie();
-//   console.log("------------------");
-//   console.log(data);
-//   response.json({ data });
-// }
-
 module.exports = {
   list: [asyncErrorBoundary(list)],
   read: [asyncErrorBoundary(movieExists), read],
-  // listTheatersForMovie: [
-  //   asyncErrorBoundary(movieExists),
-  //   asyncErrorBoundary(listTheatersForMovie),
-  // ],
+  movieExists,
 };

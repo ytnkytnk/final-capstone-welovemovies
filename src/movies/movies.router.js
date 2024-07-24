@@ -1,4 +1,4 @@
-const router = require("express").Router();
+const router = require("express").Router({ mergeParams: true });
 const controller = require("./movies.controller");
 const methodNotAllowed = require("../errors/methodNotAllowed");
 
@@ -6,11 +6,13 @@ const reviewsRouter = require("../reviews/reviews.router");
 const theatersRouter = require("../theaters/theaters.router");
 
 // TODO: Add your routes here
-// router
-//   .route("/:movie_id/theaters")
-//   .get(controller.listTheatersForMovie)
-//   .all(methodNotAllowed);
-router.route("/:movie_id").get(controller.read).all(methodNotAllowed);
+
+// nested router
+router.use("/:movieId/reviews", controller.movieExists, reviewsRouter);
+router.use("/:movieId/theaters", controller.movieExists, theatersRouter);
+
+// other router for movies
+router.route("/:movieId").get(controller.read).all(methodNotAllowed);
 router.route("/").get(controller.list).all(methodNotAllowed);
 
 module.exports = router;
