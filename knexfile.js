@@ -2,9 +2,7 @@ const path = require("path");
 
 require("dotenv").config();
 
-const {
-  DATABASE_URL = "postgresql://postgres@localhost/postgres",
-} = process.env;
+const { DATABASE_URL } = process.env;
 
 module.exports = {
   development: {
@@ -18,8 +16,8 @@ module.exports = {
       directory: path.join(__dirname, "src", "db", "seeds"),
     },
     ssl: {
-      rejectUnauthorized: false // This will allow connections without requiring SSL certificates to be valid.
-    }
+      rejectUnauthorized: false, // This will allow connections without requiring SSL certificates to be valid.
+    },
   },
 
   production: {
@@ -33,8 +31,8 @@ module.exports = {
       directory: path.join(__dirname, "src", "db", "seeds"),
     },
     ssl: {
-      rejectUnauthorized: false // This will allow connections without requiring SSL certificates to be valid.
-    }
+      rejectUnauthorized: false, // This will allow connections without requiring SSL certificates to be valid.
+    },
   },
 
   test: {
