@@ -1,6 +1,7 @@
 const service = require("./reviews.service");
 const asyncErrorBoundary = require("../errors/asyncErrorBoundary");
 const methodNotAllowed = require("../errors/methodNotAllowed");
+const { column } = require("../db/connection");
 
 async function reviewExists(request, response, next) {
   // TODO: Write your code here
@@ -51,6 +52,17 @@ function noMovieIdInPath(request, response, next) {
 
 async function update(request, response) {
   // TODO: Write your code here
+  // console.log("-----------------");
+  // console.log("req.body.data: ", request.body.data);
+
+  const updatedReview = {
+    ...response.locals.review,
+    ...request.body.data,
+    review_id: response.locals.review.review_id,
+  };
+  // console.log("updatedReview: ", updatedReview);
+  const data = await service.update(updatedReview);
+  response.json({ data });
 }
 
 module.exports = {

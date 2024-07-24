@@ -12,6 +12,10 @@ app.use((req, res, next) => {
   next();
 });
 
+// express.json() is a built in middleware function in Express starting from v4.16.0.
+// It parses incoming JSON requests and puts the parsed data in req.body.
+app.use(express.json());
+
 // TODO: Add your code here
 app.use("/movies", moviesRouter);
 app.use("/theaters", theatersRouter);
