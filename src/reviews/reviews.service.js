@@ -7,9 +7,13 @@ async function destroy(reviewId) {
   return db(tableName).where({ review_id: reviewId }).del();
 }
 
+// this function only works with movie_id (/movies/:movieId/reviews)
 async function list(movie_id) {
   // TODO: Write your code here
-  return db(tableName).select("*").where({ movie_id });
+  return db("reviews")
+    .join("critics", "reviews.critic_id", "critics.critic_id")
+    .select("*")
+    .where({ movie_id });
 }
 
 async function read(reviewId) {

@@ -31,9 +31,32 @@ async function destroy(request, response) {
 async function list(request, response) {
   // TODO: Write your code here
   const data = await service.list(request.params.movieId);
-  // console.log("-----------------------");
+  // console.log("------ reviews -----------------");
   // console.log("reviews: ", data);
-  response.json({ data });
+  // console.log("type: ", typeof data); // Object ... since Array is also Object
+  // console.log("type: ", Array.isArray(data)); // true
+  const formattedData = data.map((review) => ({
+    review_id: review.review_id,
+    content: review.content,
+    score: review.score,
+    created_at: review.created_at,
+    updated_at: review.updated_at,
+    critic_id: review.critic_id,
+    movie_id: review.movie_id,
+    critic: {
+      critic_id: review.critic_id,
+      preferred_name: review.preferred_name,
+      surname: review.surname,
+      organization_name: review.organization_name,
+      created_at: review.created_at,
+      updated_at: review.updated_at,
+    },
+  }));
+  // console.log("------ formatted reviews -----------------");
+  // console.log("formatted reviews: ", formattedData);
+  // console.log("type: ", typeof formattedData); // Object ... since Array is also Object
+  // console.log("type: ", Array.isArray(formattedData)); // true
+  response.json({ data: formattedData });
 }
 
 function hasMovieIdInPath(request, response, next) {
@@ -62,6 +85,8 @@ async function update(request, response) {
   };
   // console.log("updatedReview: ", updatedReview);
   const data = await service.update(updatedReview);
+  // console.log("---- data after update --------------");
+  // console.log(data);
   response.json({ data });
 }
 
